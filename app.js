@@ -7,7 +7,6 @@ const state = { user:null, role:null, batch:[], list:[], cetakItems:[] };
 const WARNA_OPSI = ["Natural Waterbase","Black Burnt","Black","Dirty Brown",
                     "Rustic","White Bleached","Bleached"];
 
-// ---------------- "DATABASE" LOKAL ----------------
 const DB = {
   get(k, d){ try{ const v = JSON.parse(localStorage.getItem(k));
     return (v===null || v===undefined) ? d : v; }catch(e){ return d; } },
