@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistem Marking - CV Java Volume Art</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="brand">
+  <div class="logo">📦</div>
+  <div><h1>CV Java Volume Art</h1>
+  <p>Sistem Marking Anti-Double &bull; Furniture &amp; Home Decoration</p></div>
+  <div class="userbox">
+    <button id="btnUser" class="chip hidden">👤 <span id="userName"></span></button>
+    <div id="userMenu" class="menu hidden">
+      <button id="btnGantiSandi">🔑 Ganti Kata Sandi</button>
+      <button id="btnManajemen" class="admin-only hidden">👥 Manajemen Pengguna</button>
+      <button id="btnKeluar">🚪 Keluar</button>
+    </div>
+  </div>
+</header>
+
+<section id="viewLogin" class="center">
+  <div class="card narrow">
+    <h2>🔐 Masuk Karyawan</h2>
+    <label>Nama pengguna</label><input id="loginUser">
+    <label>Kata sandi</label><input id="loginPass" type="password">
+    <button id="btnLogin" class="primary">🔓 Masuk</button>
+    <p class="hint">Akun awal: admin / admin123 — segera ganti setelah masuk.</p>
+    <p id="loginErr" class="err hidden"></p>
+  </div>
+</section>
+
+<main id="viewMain" class="hidden">
+<nav class="tabs">
+  <button data-tab="buat" class="tab active">🏷️ Buat Label Baru</button>
+  <button data-tab="daftar" class="tab">📋 Daftar Packing</button>
+  <button data-tab="cetak" class="tab">🖨️ Cetak Ulang</button>
+  <button data-tab="audit" class="tab">🔍 Audit Duplikat</button>
+</nav>
+
+<section id="tab-buat" class="tabview">
+  <div class="card">
+    <div class="row">
+      <div><label>Mode</label>
+        <select id="mode"><option value="satuan">Satuan (1 label)</option>
+        <option value="borongan">Borongan (banyak sekaligus)</option></select></div>
+      <div id="wrapJumlah" class="hidden"><label>Jumlah koli</label>
+        <input id="jumlah" type="number" value="45" min="1" max="500"></div>
+      <div class="check"><input type="checkbox" id="repl"><label for="repl">REPLACEMENT</label></div>
+    </div>
+    <div class="grid2">
+      <div>
+        <label>Shipment No</label><input id="shipment" placeholder="EWS 020/VIII/2026">
+        <label>Nomor Utama</label><input id="utama" placeholder="10">
+        <p id="previewNo" class="ok hidden"></p>
+      </div>
+      <div>
+        <label>Code</label><input id="code" placeholder="#10">
+        <label>Description</label><input id="desc" placeholder="DAISY BIKINI WOODEN DUCK">
+        <label>Size</label><input id="size" placeholder="20x17x45 CM">
+        <label>Colour</label><select id="warna"></select>
+        <div id="wrapWarnaBaru" class="hidden"><label>Ketik warna baru</label><input id="warnaBaru"></div>
+        <label>Qty</label><input id="qty" placeholder="4 PCS">
+      </div>
+    </div>
+    <button id="btnTerbitkan" class="primary">🔒 Terbitkan</button>
+    <p id="buatMsg"></p>
+  </div>
+  <div id="hasilBuat" class="card hidden">
+    <h3>🖨️ Label Siap Cetak</h3>
+    <div id="tabelHasil"></div>
+    <div class="row">
+      <button id="btnPrintHasil" class="primary">🖨️ Cetak (HTML)</button>
+      <button id="btnExcelHasil">📥 Export Excel</button>
+    </div>
+  </div>
+</section>
+
+<section id="tab-daftar" class="tabview hidden">
+  <div class="card">
+    <div class="row">
+      <div><label>Kode Buyer</label><select id="kodeBuyer"></select></div>
+      <div id="wrapManual" class="hidden"><label>Awalan Shipment</label><input id="manualPrefix" placeholder="cth: DGE"></div>
+      <div><label>Filter warna</label><select id="filterWarna"></select></div>
+      <button id="btnMuat" class="primary">Muat Data</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="split">
+      <div><h3>Ringkasan per shipment</h3><div id="ringkasan"></div></div>
+      <div><h3>🛠️ Kelola Data</h3>
+        <label>Shipment</label><select id="kelolaShip"></select>
+        <div class="row"><button id="btnEditShip">✏️ Edit</button>
+        <button id="btnHapusShip" class="danger">🗑️ Hapus</button></div>
+        <label>Packing No</label><select id="kelolaPack"></select>
+        <div class="row"><button id="btnEditPack">✏️ Edit</button>
+        <button id="btnHapusPack" class="danger">🗑️ Hapus</button></div>
+      </div>
+    </div>
+    <h3>Daftar Label</h3><div id="tabelDaftar"></div>
+    <button id="btnExcelDaftar">📥 Export Hasil ke Excel</button>
+  </div>
+</section>
+
+<section id="tab-cetak" class="tabview hidden">
+  <div class="card">
+    <div class="row">
+      <div><label>Kode Buyer</label><select id="cetakKode"></select></div>
+      <div id="wrapCetakManual" class="hidden"><label>Awalan Shipment</label><input id="cetakManual"></div>
+      <div><label>Shipment</label><select id="cetakShip"></select></div>
+      <div><label>Packing No</label><select id="cetakPack"></select></div>
+      <button id="btnCetakUlang" class="primary">🖨️ Cetak Ulang</button>
+    </div>
+    <p class="hint">Cetak ulang tidak membuat nomor ganda; kejadian tercatat di log.</p>
+    <h3>📒 Log Cetak Ulang</h3><div id="logCetak"></div>
+  </div>
+</section>
+
+<section id="tab-audit" class="tabview hidden">
+  <div class="card">
+    <label>Tempel satu kolom packing no (satu per baris)</label>
+    <textarea id="auditData" rows="10" placeholder="10.1&#10;10.2&#10;10.2"></textarea>
+    <button id="btnAudit" class="primary">🔍 Periksa Duplikat</button>
+    <div id="auditHasil"></div>
+  </div>
+</section>
+</main>
+
+<div id="modal" class="modal hidden">
+  <div class="modalbox">
+    <h3 id="modalTitle">⚠️ Konfirmasi</h3>
+    <div id="modalBody"></div>
+    <div class="row right">
+      <button id="modalOk" class="primary">✅ Ya</button>
+      <button id="modalBatal">Batal</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
